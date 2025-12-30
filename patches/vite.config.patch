@@ -1,0 +1,28 @@
+# Vite Configuration Patch - INFORMATIONAL ONLY
+# 
+# This patch file documents the change needed for Android WebView compatibility.
+# The actual patching is performed automatically by build.ps1 via string replacement.
+# 
+# WHY THIS PATCH IS NEEDED:
+# Chrome extensions use absolute paths (base: '/') which resolve to the root filesystem.
+# Android WebView loads assets from file:///android_asset/ so paths must be relative (base: './').
+# Without this change, all JS/CSS asset loads fail with 404 errors.
+#
+# HOW THE PATCH IS APPLIED:
+# The build.ps1 script applies this patch during step 3 using PowerShell string replacement:
+#   $viteContent = $viteContent -replace "base: '/'", "base: './'"
+# This modifies mochiwallet/vite.config.ts before the extension is rebuilt.
+#
+# The diff below shows the exact change for reference:
+
+--- a/vite.config.ts
++++ b/vite.config.ts
+@@ -29,7 +29,7 @@ export default defineConfig({
+     sourcemap: isDev,
+     emptyOutDir: true,
+   },
+-  base: '/',
++  base: './',
+   resolve: {
+     alias: {
+       '@': path.resolve(__dirname, './src'),

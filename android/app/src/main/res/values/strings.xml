@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mochi Wallet</string>
+    <string name="wallet_loading">Loading wallet…</string>
+    <string name="exit_title">Exit Wallet</string>
+    <string name="exit_confirmation">Are you sure you want to exit?</string>
+    <string name="exit">Exit</string>
+    <string name="cancel">Cancel</string>
+</resources>
