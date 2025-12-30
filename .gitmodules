@@ -1,0 +1,4 @@
+[submodule "mochiwallet"]
+	path = mochiwallet
+	url = https://github.com/adequate-systems/mochiwallet.git
+	branch = main

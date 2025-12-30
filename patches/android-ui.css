@@ -1,0 +1,32 @@
+/* Optional Android-only UI overrides to use full device width */
+html, body {
+  margin: 0;
+  padding: 0 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#root,
+#root > * {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  box-sizing: border-box;
+}
+
+/* Nudge common flex containers to fill available space without overflowing */
+[class*="container"],
+[class*="wrapper"],
+[class*="content"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Hide the "Expand to panel" button - it doesn't work in WebView */
+/* This button contains a Lucide PanelRight or PanelRightClose icon (rect + line SVG) */
+/* It's in the header, after the network status indicator */
+button:has(svg rect):has(svg line) {
+  display: none !important;
+}
