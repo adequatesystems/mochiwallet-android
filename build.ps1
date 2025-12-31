@@ -42,7 +42,7 @@ if (-not (Test-Path $extensionDir) -or -not (Test-Path (Join-Path $extensionDir 
     if (-not $submoduleReady) {
         Remove-Item -Recurse -Force $extensionDir -ErrorAction SilentlyContinue
         $ErrorActionPreference = "Continue"
-        git clone https://github.com/adequate-systems/mochiwallet.git $extensionDir 2>&1 | Out-Null
+        git clone https://github.com/adequatesystems/mochiwallet.git $extensionDir 2>&1 | Out-Null
         $gitExit = $LASTEXITCODE
         $ErrorActionPreference = "Stop"
         if ($gitExit -eq 0 -and (Test-Path (Join-Path $extensionDir "package.json"))) {
@@ -113,7 +113,7 @@ onlyBuiltDependencies:
             
             # Clone mochimo-wallet (git writes progress to stderr, so suppress errors temporarily)
             $ErrorActionPreference = "Continue"
-            git clone --depth 1 --branch v1.1.54 https://github.com/adequate-systems/mochimo-wallet.git $tempBuildDir 2>&1 | Out-Null
+            git clone --depth 1 --branch v1.1.54 https://github.com/adequatesystems/mochimo-wallet.git $tempBuildDir 2>&1 | Out-Null
             $ErrorActionPreference = "Stop"
             
             Push-Location $tempBuildDir
@@ -156,7 +156,7 @@ onlyBuiltDependencies:
             
             # Clone (git writes progress to stderr, so suppress errors temporarily)
             $ErrorActionPreference = "Continue"
-            git clone --depth 1 https://github.com/adequate-systems/mochimo-mesh-api-client.git $tempBuildDir2 2>&1 | Out-Null
+            git clone --depth 1 https://github.com/adequatesystems/mochimo-mesh-api-client.git $tempBuildDir2 2>&1 | Out-Null
             $ErrorActionPreference = "Stop"
             
             Push-Location $tempBuildDir2

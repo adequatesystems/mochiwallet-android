@@ -1,8 +1,8 @@
 # Mochimo Wallet - Android
 
-[![Build Android APK](https://github.com/adequate-systems/mochiwallet-android/actions/workflows/build.yml/badge.svg)](https://github.com/adequate-systems/mochiwallet-android/actions/workflows/build.yml)
+[![Build Android APK](https://github.com/adequatesystems/mochiwallet-android/actions/workflows/build.yml/badge.svg)](https://github.com/adequatesystems/mochiwallet-android/actions/workflows/build.yml)
 
-Android mobile app for the Mochimo cryptocurrency wallet, built as a WebView wrapper around the [mochiwallet](https://github.com/adequate-systems/mochiwallet) Chromium extension.
+Android mobile app for the Mochimo cryptocurrency wallet, built as a WebView wrapper around the [mochiwallet](https://github.com/adequatesystems/mochiwallet) Chromium extension.
 
 **This is a clean, separate repository** that pulls the upstream extension as a git submodule and contains only Android-specific code.
 
@@ -12,7 +12,7 @@ Android mobile app for the Mochimo cryptocurrency wallet, built as a WebView wra
 
 ```powershell
 # Clone this repository
-git clone https://github.com/adequate-systems/mochiwallet-android.git
+git clone https://github.com/adequatesystems/mochiwallet-android.git
 cd mochiwallet-android
 
 # Initialize the upstream extension submodule (build scripts will auto-init/clone if missing)
@@ -340,7 +340,7 @@ The app enables these WebView settings that are normally restricted:
 3. Test thoroughly (see Testing Checklist)
 4. Submit pull request
 
-For extension changes, contribute to the upstream [mochiwallet](https://github.com/adequate-systems/mochiwallet) repository.
+For extension changes, contribute to the upstream [mochiwallet](https://github.com/adequatesystems/mochiwallet) repository.
 
 ---
 
@@ -352,7 +352,7 @@ Same as upstream mochimo-wallet project.
 
 ## 🔗 Links
 
-- **Upstream Extension:** https://github.com/adequate-systems/mochiwallet
+- **Upstream Extension:** https://github.com/adequatesystems/mochiwallet
 - **Mochimo Network:** https://mochimo.org
 - **Documentation:** [docs/TECHNICAL_DOCUMENTATION.md](docs/TECHNICAL_DOCUMENTATION.md)
 

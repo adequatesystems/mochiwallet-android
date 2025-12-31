@@ -67,7 +67,7 @@ if [ ! -d "$EXTENSION_DIR" ] || [ ! -f "$EXTENSION_DIR/package.json" ]; then
     # Fallback: plain git clone if submodule init failed or not a git repo
     if [ "$submodule_ready" = false ]; then
         rm -rf "$EXTENSION_DIR"
-        if git clone https://github.com/adequate-systems/mochiwallet.git "$EXTENSION_DIR" >/dev/null 2>&1; then
+        if git clone https://github.com/adequatesystems/mochiwallet.git "$EXTENSION_DIR" >/dev/null 2>&1; then
             if [ -d "$EXTENSION_DIR" ] && [ -f "$EXTENSION_DIR/package.json" ]; then
                 submodule_ready=true
             fi
@@ -133,7 +133,7 @@ EOF
             TEMP_BUILD_DIR=$(mktemp -d)
             
             # Clone mochimo-wallet
-            git clone --depth 1 --branch v1.1.54 https://github.com/adequate-systems/mochimo-wallet.git "$TEMP_BUILD_DIR" > /dev/null 2>&1
+            git clone --depth 1 --branch v1.1.54 https://github.com/adequatesystems/mochimo-wallet.git "$TEMP_BUILD_DIR" > /dev/null 2>&1
             
             pushd "$TEMP_BUILD_DIR" > /dev/null
             
@@ -170,7 +170,7 @@ EOF
             echo -e "   Building mochimo-mesh-api-client dependency..."
             TEMP_BUILD_DIR2=$(mktemp -d)
             
-            git clone --depth 1 https://github.com/adequate-systems/mochimo-mesh-api-client.git "$TEMP_BUILD_DIR2" > /dev/null 2>&1
+            git clone --depth 1 https://github.com/adequatesystems/mochimo-mesh-api-client.git "$TEMP_BUILD_DIR2" > /dev/null 2>&1
             
             pushd "$TEMP_BUILD_DIR2" > /dev/null
             npm install --ignore-scripts > /dev/null 2>&1
@@ -302,8 +302,8 @@ fi
 # Read content
 CONTENT=$(cat "$INDEX_PATH")
 
-# Remove require('buffer') line
-CONTENT=$(echo "$CONTENT" | sed "s|window\.Buffer = window\.Buffer || require(['\"]buffer['\"]).Buffer;||g")
+# Remove require('buffer') line (escape pipe chars for sed)
+CONTENT=$(echo "$CONTENT" | sed "s/window\.Buffer = window\.Buffer || require(['\"]buffer['\"]).\.Buffer;//g")
 
 # Fix absolute asset paths to relative paths for Android WebView
 # Convert "/assets/" to "./assets/" in src, href attributes

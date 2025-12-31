@@ -10,7 +10,7 @@
 
 ### What This Repository Does
 
-This repository wraps the Mochimo wallet Chrome extension as an Android application. It does **not** contain the wallet logic itselfthat lives in the upstream `adequate-systems/mochiwallet` repository.
+This repository wraps the Mochimo wallet Chrome extension as an Android application. It does **not** contain the wallet logic itselfthat lives in the upstream `adequatesystems/mochiwallet` repository.
 
 **Core Strategy**:
 - Use git submodule to track the upstream extension
@@ -22,7 +22,7 @@ This repository wraps the Mochimo wallet Chrome extension as an Android applicat
 
 ```
 mochiwallet-android/              # This repo (Android wrapper only)
- mochiwallet/                  # Git submodule  adequate-systems/mochiwallet
+ mochiwallet/                  # Git submodule  adequatesystems/mochiwallet
  android/                      # Standard Android project (Gradle, Kotlin)
     app/src/main/
        assets/               # Built extension copied here at build time
@@ -62,7 +62,7 @@ mochiwallet-android/              # This repo (Android wrapper only)
 ```ini
 [submodule "mochiwallet"]
     path = mochiwallet
-    url = https://github.com/adequate-systems/mochiwallet.git
+    url = https://github.com/adequatesystems/mochiwallet.git
     branch = main
 ```
 
@@ -287,7 +287,7 @@ It's missing the `onlyBuiltDependencies` section needed for pnpm 10.x to allow b
 **Manual Recovery**: If automated build fails:
 ```powershell
 # 1. Clone and build mochimo-wallet separately
-git clone --depth 1 --branch v1.1.54 https://github.com/adequate-systems/mochimo-wallet.git temp-mw
+git clone --depth 1 --branch v1.1.54 https://github.com/adequatesystems/mochimo-wallet.git temp-mw
 cd temp-mw
 
 # Add missing config to pnpm-workspace.yaml
@@ -312,7 +312,7 @@ cd mochiwallet
 npx pnpm@8 run build
 ```
 
-**Upstream Fix**: This workaround will become unnecessary if/when the upstream `adequate-systems/mochimo-wallet` repository adds the `onlyBuiltDependencies` configuration to their `pnpm-workspace.yaml`.
+**Upstream Fix**: This workaround will become unnecessary if/when the upstream `adequatesystems/mochimo-wallet` repository adds the `onlyBuiltDependencies` configuration to their `pnpm-workspace.yaml`.
 
 **Debug Commands**:
 ```powershell
@@ -478,7 +478,7 @@ If any step fails, script exits immediately. No partial/corrupt builds.
 
 ### 5.1 Upstream Extension
 
-**Repository**: `https://github.com/adequate-systems/mochiwallet`  
+**Repository**: `https://github.com/adequatesystems/mochiwallet`  
 **Update Frequency**: As needed  
 **Versioning**: The extension may use tags (v1.0.0, v1.1.0, etc.)
 
@@ -680,6 +680,6 @@ cd ..
 ---
 
 **Last Updated**: 2025-12-30  
-**Maintainer**: adequate-systems  
-**Repository**: https://github.com/adequate-systems/mochiwallet-android
+**Maintainer**: adequatesystems  
+**Repository**: https://github.com/adequatesystems/mochiwallet-android
 
