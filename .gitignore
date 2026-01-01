@@ -4,6 +4,13 @@ android/app/build/
 android/build/
 android/local.properties
 
+# Release Signing (NEVER commit these!)
+android/keystore.properties
+android/*.jks
+android/*.keystore
+*.jks
+*.keystore
+
 # Assets (generated during build)
 android/app/src/main/assets/
 
@@ -21,3 +28,6 @@ mochiwallet/pnpm-workspace.yaml
 # OS files
 .DS_Store
 Thumbs.db
+
+# APK files in root
+*.apk
