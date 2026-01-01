@@ -69,6 +69,13 @@ class MainActivity : AppCompatActivity() {
                 
                 // Enable modern web features
                 mediaPlaybackRequiresUserGesture = false
+                
+                // Viewport and scaling settings for full-screen display
+                useWideViewPort = true
+                loadWithOverviewMode = true
+                setSupportZoom(false)
+                builtInZoomControls = false
+                displayZoomControls = false
             }
 
             // Add JavaScript interface for native communication
