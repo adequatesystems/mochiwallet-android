@@ -65,8 +65,8 @@ jobs:
       - name: Make build script executable
         run: chmod +x build.sh
         
-      - name: Build web extension
-        run: ./build.sh -s false
+      - name: Build web extension and prepare assets
+        run: ./build.sh
         env:
           JAVA_HOME: ${{ env.JAVA_HOME }}
           ANDROID_HOME: ${{ env.ANDROID_HOME }}
