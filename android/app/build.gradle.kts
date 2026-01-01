@@ -15,14 +15,14 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.mochimo.mochiwallet"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.mochimo.mochiwallet"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 19
-        versionName = "0.0.18-beta.2"
+        targetSdk = 35
+        versionCode = 20
+        versionName = "0.0.18-beta.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         
