@@ -150,7 +150,7 @@ Set to `true` when troubleshooting Chrome API compatibility issues.
 
 **Never Delete This File**: The wallet will not function without it.
 
-### 2.4 Android WebView Configuration (`android/app/src/main/java/com/mochimo/wallet/MainActivity.kt`)
+### 2.4 Android WebView Configuration (`android/app/src/main/java/com/mochimo/mochiwallet/MainActivity.kt`)
 
 **Critical Settings**:
 
@@ -160,6 +160,13 @@ webView.settings.apply {
     domStorageEnabled = true
     allowFileAccessFromFileURLs = true      // REQUIRED
     allowUniversalAccessFromFileURLs = true // REQUIRED
+    
+    // Viewport scaling for full-screen display
+    useWideViewPort = true                  // Enable viewport meta tag
+    loadWithOverviewMode = true             // Fit content to screen
+    setSupportZoom(false)                   // Disable pinch zoom
+    builtInZoomControls = false
+    displayZoomControls = false
 }
 ```
 
@@ -168,6 +175,7 @@ webView.settings.apply {
 - Android WebView is sandboxed by default
 - `allowFileAccessFromFileURLs` enables loading local assets
 - Without these: CORS errors, blank screen
+- Viewport settings ensure UI fills entire screen (not just top 75%)
 
 **Error Handling**:
 The `WalletWebViewClient` includes error handlers for robust operation:

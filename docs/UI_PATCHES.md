@@ -1,6 +1,6 @@
 ## Android UI Patches
 
-**Purpose:** Hide UI elements that don't function properly in Android WebView and optimize the layout for mobile devices.
+**Purpose:** Hide UI elements that don't function properly in Android WebView, optimize the layout for mobile devices, and ensure the UI scales to fill the entire screen.
 
 ### Why These Patches Exist
 
@@ -9,12 +9,40 @@ The Mochimo wallet is a Chrome extension designed for browser environments. Seve
 1. **Panel Toggle Button** - The "Expand to panel" button opens a separate browser panel, which doesn't exist in WebView
 2. **Import MCM File** - File system APIs for importing MCM files aren't available in WebView
 3. **Export/Backup Wallet** - File download APIs for exporting wallet data aren't available in WebView
+4. **Fixed Viewport Size** - Chrome extensions have a fixed popup size; Android needs full-screen scaling
+
+### UI Scaling Solution
+
+The UI scaling is handled at two levels:
+
+**1. WebView Settings (MainActivity.kt):**
+```kotlin
+settings.apply {
+    useWideViewPort = true          // Enable viewport meta tag support
+    loadWithOverviewMode = true     // Fit content to screen width
+    setSupportZoom(false)           // Disable pinch zoom
+    builtInZoomControls = false     // Hide zoom controls
+    displayZoomControls = false
+}
+```
+
+**2. CSS Overrides (android-ui.css):**
+```css
+html, body {
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;  /* Dynamic viewport height for mobile */
+    overflow-x: hidden;
+}
+```
+
+These settings ensure the wallet UI fills the entire screen without the bottom 25% being cut off.
 
 ### Files Introduced
 
 | File | Purpose | Detection Method |
 |------|---------|------------------|
-| `patches/android-ui.css` | Full-width layout for mobile | CSS overrides |
+| `patches/android-ui.css` | Full-screen layout for mobile | CSS overrides |
 | `patches/hide-sidebar-button.js` | Hides panel toggle button in header | SVG icon detection (rect + line elements) |
 | `patches/hide-mcm-import.js` | Hides "Import MCM File" in Add Account | Text matching ("import mcm") |
 | `patches/hide-export-wallet.js` | Hides Backup section in Settings | Text matching ("Export Wallet", "Backup" heading) |
