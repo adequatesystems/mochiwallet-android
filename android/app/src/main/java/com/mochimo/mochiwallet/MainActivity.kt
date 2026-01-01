@@ -1,4 +1,4 @@
-package com.mochimo.wallet
+package com.mochimo.mochiwallet
 
 import android.annotation.SuppressLint
 import android.os.Bundle

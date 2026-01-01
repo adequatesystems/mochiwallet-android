@@ -14,11 +14,11 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.mochimo.wallet"
+    namespace = "com.mochimo.mochiwallet"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.mochimo.wallet"
+        applicationId = "com.mochimo.mochiwallet"
         minSdk = 24
         targetSdk = 34
         versionCode = 18
@@ -58,6 +58,7 @@ android {
         }
         debug {
             isMinifyEnabled = false
+            // Debug builds use com.mochimo.mochiwallet.debug
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
         }
