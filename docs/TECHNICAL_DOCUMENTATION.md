@@ -177,6 +177,13 @@ webView.settings.apply {
 - Without these: CORS errors, blank screen
 - Viewport settings ensure UI fills entire screen (not just top 75%)
 
+**External Link Handling**:
+The `WalletWebViewClient` intercepts URL loading via `shouldOverrideUrlLoading()`:
+- **Local `file://` URLs** - Load within WebView (required for wallet operation)
+- **External `http://` and `https://` URLs** - Open in device's default browser via Intent
+
+This allows users to view external content (e.g., Mochiscan transaction details) and return to the wallet app using the back button, rather than being trapped in an external webpage within the WebView.
+
 **Error Handling**:
 The `WalletWebViewClient` includes error handlers for robust operation:
 - `onReceivedError()` - Displays user-friendly error page for loading failures

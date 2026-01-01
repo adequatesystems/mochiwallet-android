@@ -21,8 +21,8 @@ android {
         applicationId = "com.mochimo.mochiwallet"
         minSdk = 24
         targetSdk = 34
-        versionCode = 18
-        versionName = "0.0.18-beta.1"
+        versionCode = 19
+        versionName = "0.0.18-beta.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         

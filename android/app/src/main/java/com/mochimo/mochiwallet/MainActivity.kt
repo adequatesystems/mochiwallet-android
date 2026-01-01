@@ -113,6 +113,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class WalletWebViewClient : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+            val url = request?.url?.toString() ?: return false
+            
+            // Allow local file URLs to load in WebView
+            if (url.startsWith("file://")) {
+                return false
+            }
+            
+            // Open external URLs (http/https) in the device's browser
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, request.url)
+                startActivity(intent)
+                return true // Prevent WebView from loading the URL
+            }
+            
+            return false
+        }
+
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
             // Inject Android-specific initialization
