@@ -1,0 +1,33 @@
+﻿# Android Build Outputs
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+
+# Release Signing (NEVER commit these!)
+android/keystore.properties
+android/*.jks
+android/*.keystore
+*.jks
+*.keystore
+
+# Assets (generated during build)
+android/app/src/main/assets/
+
+# Submodule artifacts (built during build process)
+mochiwallet/node_modules/
+mochiwallet/dist/
+mochiwallet/.vite/
+mochiwallet/pnpm-workspace.yaml
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# APK files in root
+*.apk

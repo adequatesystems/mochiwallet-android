@@ -1,0 +1,161 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, develop ]
+    tags:
+      - 'v*'  # Trigger on version tags for release builds
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual trigger
+    inputs:
+      build_release:
+        description: 'Build signed release APK/AAB'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for creating releases
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive  # Fetch mochiwallet submodule
+          
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pnpm-store
+            mochiwallet/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('mochiwallet/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+            
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('android/**/*.gradle*', 'android/**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+            
+      - name: Make build script executable
+        run: chmod +x build.sh
+        
+      - name: Build web extension and prepare assets
+        run: ./build.sh
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME }}
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
+
+      # Debug build (always)
+      - name: Build Debug APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+          
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochiwallet-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      # Release build (on tags or manual trigger)
+      - name: Decode keystore
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.build_release == true
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/release-keystore.jks
+          
+      - name: Create keystore.properties
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.build_release == true
+        run: |
+          cat > android/keystore.properties << EOF
+          storeFile=release-keystore.jks
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          EOF
+          
+      - name: Build Release APK
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.build_release == true
+        run: |
+          cd android
+          ./gradlew assembleRelease
+          
+      - name: Build Release AAB (App Bundle)
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.build_release == true
+        run: |
+          cd android
+          ./gradlew bundleRelease
+          
+      - name: Upload Release APK
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.build_release == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochiwallet-release-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 90
+          
+      - name: Upload Release AAB
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.build_release == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochiwallet-release-aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
+          retention-days: 90
+
+      # Create GitHub Release (on tags only)
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            android/app/build/outputs/apk/release/app-release.apk
+            android/app/build/outputs/bundle/release/app-release.aab
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup signing files
+        if: always()
+        run: |
+          rm -f android/app/release-keystore.jks
+          rm -f android/keystore.properties
+          
+      - name: Upload build logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            android/app/build/outputs/logs/
+            android/build/reports/
+          retention-days: 7
